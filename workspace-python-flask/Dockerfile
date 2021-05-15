@@ -10,10 +10,13 @@ FROM codercom/code-server:${VERSION_CODE_SERVER}
 ##
 USER root
 
-RUN apt-get update && apt-get install -y \
-      python3-pip
+ARG VERSION_PIP="18.1-5"
+ARG VERSION_FLASK="2.0.0"
 
-RUN pip3 install Flask
+RUN apt-get update && apt-get install -y \
+      python3-pip=${VERSION_PIP}
+
+RUN pip3 install Flask==${VERSION_FLASK}
 
 ##
 # Install code-server extensions
