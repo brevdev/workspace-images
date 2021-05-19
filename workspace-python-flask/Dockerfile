@@ -19,6 +19,15 @@ RUN apt-get update && apt-get install -y \
 RUN pip3 install Flask==${VERSION_FLASK}
 
 ##
+# Prepare workspace
+##
+ENV PATH="/home/coder/.local/bin:${PATH}"
+ADD ../.vscode /home/coder/workspace/.vscode
+ADD ../app.py /home/coder/workspace/app.py
+
+RUN chown -R coder:coder /home/coder/workspace
+
+##
 # Install code-server extensions
 ##
 USER coder
@@ -34,5 +43,3 @@ RUN /usr/bin/python3 /home/coder/.local/share/code-server/extensions/ms-python.p
 ENV PATH="/home/coder/.local/bin:${PATH}"
 
 WORKDIR /home/coder/workspace
-ADD ../.vscode ./.vscode
-ADD ../app.py ./
