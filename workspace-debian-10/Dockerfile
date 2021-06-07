@@ -16,9 +16,9 @@ RUN apt-get update
 # Prepare workspace
 ##
 ENV PATH="/home/coder/.local/bin:${PATH}"
-ADD ../.vscode /home/coder/workspace/.vscode
+ADD ../.vscode /home/coder/tmp/.vscode
 
-RUN chown -R coder:coder /home/coder/workspace
+RUN chown -R coder:coder /home/coder
 
 ##
 # Prepare workspace
