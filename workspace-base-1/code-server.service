@@ -3,10 +3,12 @@ Description=code-server
 After=network.target
 
 [Service]
+User=brev
+Environment="USER=brev"
 Type=exec
-ExecStart=/usr/bin/code-server --bind-addr 0.0.0.0:8080
-ExecReload=/usr/bin/code-server --bind-addr 0.0.0.0:8080
+ExecStart=/usr/bin/code-server --bind-addr 0.0.0.0:8080 /home/brev/workspace
+ExecReload=/usr/bin/code-server --bind-addr 0.0.0.0:8080 /home/brev/workspace
 Restart=always
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
