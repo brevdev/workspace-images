@@ -23,7 +23,7 @@ RUN apt-get update \
     lsb-release \
     && rm -rf /var/lib/apt/lists/*
 
-RUN curl -fsSL https://code-server.dev/install.sh | sh
+RUN curl -fsSL https://raw.githubusercontent.com/brevdev/code-server/main/install.sh | sh
 
 COPY code-server.service /lib/systemd/system/
 
