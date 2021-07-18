@@ -21,12 +21,32 @@ RUN apt-get update \
     sudo \
     vim.tiny \
     lsb-release \
+    iputils-ping \
+    dnsutils \
+    wget \
+    build-essential \
+    zip \
+    unzip \
     && rm -rf /var/lib/apt/lists/*
+
+RUN adduser --gecos '' --disabled-password brev && \
+    echo "brev ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
+
+RUN usermod -a -G docker brev
 
 RUN curl -fsSL https://raw.githubusercontent.com/brevdev/code-server/main/install.sh | sh
 
 COPY code-server.service /lib/systemd/system/
 
 RUN ln -sf /lib/systemd/system/code-server.service /etc/systemd/system/multi-user.target.wants/code-server.service
+
+WORKDIR /home/brev/workspace
+
+USER brev
+
+RUN mkdir /home/brev/tmp \
+    && echo "export TMPDIR=$HOME/tmp" >> /home/brev/.bashrc
+
+USER root
 
 EXPOSE 8080
