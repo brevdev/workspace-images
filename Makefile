@@ -19,6 +19,6 @@ pushDocker_WorkspaceBase1Prod:
 	$(eval registry=brevdev/workspace-ubuntu-20)
 	docker login
 
-	cd workspace-base-1 && $(DOCKERCMD) build -t ${registry} . && cd -
+	cd workspace-base-1 && $(DOCKERCMD) build --no-cache -t ${registry} . && cd -
 
 	$(DOCKERCMD) push ${registry}:${tag}

@@ -23,10 +23,16 @@ RUN apt-get update \
     lsb-release \
     && rm -rf /var/lib/apt/lists/*
 
+RUN adduser --gecos '' --disabled-password brev && \
+    echo "brev ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
+
+# RUN curl -fsSL https://code-server.dev/install.sh | sh
 RUN curl -fsSL https://raw.githubusercontent.com/brevdev/code-server/main/install.sh | sh
 
 COPY code-server.service /lib/systemd/system/
 
 RUN ln -sf /lib/systemd/system/code-server.service /etc/systemd/system/multi-user.target.wants/code-server.service
+
+WORKDIR /home/brev/workspace
 
 EXPOSE 8080
