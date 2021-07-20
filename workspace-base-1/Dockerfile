@@ -49,4 +49,4 @@ RUN mkdir /home/brev/tmp \
 
 USER root
 
-EXPOSE 8080
+EXPOSE 22778

@@ -12,7 +12,7 @@ pushDocker_WorkspaceBase1Dev:
 	$(eval registry=public.ecr.aws/r3q7i5p9/brev-workspace-env-pub)
 	aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${registry}  
 
-	cd workspace-base-1 && $(DOCKERCMD) build --no-cache -t ${registry}:${tag} . && cd -
+	cd workspace-base-1 && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
 	$(DOCKERCMD) push ${registry}:${tag}
 
 pushDocker_WorkspaceBase1Prod:
