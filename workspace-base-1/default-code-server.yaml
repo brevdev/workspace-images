@@ -1,0 +1,6 @@
+bind-addr: 127.0.0.1:22778
+auth: password
+password: ccf5393d4dd35ebf3272c111
+cert: false
+proxy-port-separator: dash
+disable-telemetry: true

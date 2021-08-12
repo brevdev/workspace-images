@@ -40,6 +40,9 @@ COPY code-server.service /lib/systemd/system/
 
 RUN ln -sf /lib/systemd/system/code-server.service /etc/systemd/system/multi-user.target.wants/code-server.service
 
+RUN mkdir -p /home/brev/.config/code-server
+COPY default-code-server.yaml /home/brev/.config/code-server/config.yaml
+
 WORKDIR /home/brev/workspace
 
 USER brev
