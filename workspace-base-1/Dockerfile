@@ -29,6 +29,7 @@ RUN apt-get update \
     unzip \
     jq \
     rsync \
+    python-is-python3 \
     && rm -rf /var/lib/apt/lists/*
 
 RUN adduser --gecos '' --disabled-password brev && \
