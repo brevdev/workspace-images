@@ -27,6 +27,8 @@ RUN apt-get update \
     build-essential \
     zip \
     unzip \
+    jq \
+    rsync \
     && rm -rf /var/lib/apt/lists/*
 
 RUN adduser --gecos '' --disabled-password brev && \
