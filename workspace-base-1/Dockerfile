@@ -30,12 +30,15 @@ RUN apt-get update \
     jq \
     rsync \
     python-is-python3 \
+    software-properties-common \
     && rm -rf /var/lib/apt/lists/*
 
 RUN adduser --gecos '' --disabled-password brev && \
     echo "brev ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
 
 RUN usermod -a -G docker brev
+
+ENV TMPDIR=/home/brev/tmp
 
 RUN curl -fsSL https://raw.githubusercontent.com/brevdev/code-server/main/install.sh | sh
 
