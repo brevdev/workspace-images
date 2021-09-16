@@ -48,6 +48,7 @@ RUN ln -sf /lib/systemd/system/code-server.service /etc/systemd/system/multi-use
 
 RUN mkdir -p /home/brev/.config/code-server
 COPY default-code-server.yaml /home/brev/.config/code-server/config.yaml
+COPY brev-vscode-0.1.0.vsix /home/brev/.config/code-server/brev-vscode-0.1.0.vsix
 
 WORKDIR /home/brev/workspace
 
