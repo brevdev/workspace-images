@@ -1,0 +1,13 @@
+[Unit]
+Description=vault-agent
+After=network.target
+
+[Service]
+User=brev
+Environment="USER=brev"
+Type=exec
+ExecStart=vault agent -config /etc/config/config.hcl
+Restart=always
+
+[Install]
+WantedBy=default.target

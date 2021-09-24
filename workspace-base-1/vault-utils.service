@@ -1,0 +1,13 @@
+[Unit]
+Description=vault-agent
+After=network.target
+
+[Service]
+User=root
+Environment="USER=root"
+Type=exec
+ExecStart=vault-utils -service=vault-agent -configPath=/etc/config/config.hcl
+Restart=always
+
+[Install]
+WantedBy=default.target
