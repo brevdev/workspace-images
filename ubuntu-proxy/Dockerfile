@@ -1,10 +1,11 @@
-#instead of pulling from this, vendor it ourselves
-# FROM nestybox/ubuntu-focal-systemd:latest
+###############################################################
+###### Instead of pulling from this, vendor it ourselves ######
+###### FROM nestybox/ubuntu-focal-systemd:latest         ######
+###############################################################
+
 FROM ubuntu:focal
 
-#
 # Systemd installation
-#
 RUN apt-get update &&                            \
     apt-get install -y --no-install-recommends   \
             systemd                              \
@@ -37,12 +38,8 @@ RUN apt-get update &&                            \
     # Create default 'brev/brev' user
 	useradd --create-home --shell /bin/bash brev && echo "brev:brev" | chpasswd && adduser brev sudo 
 
-
 # Make use of stopsignal (instead of sigterm) to stop systemd containers.
 STOPSIGNAL SIGRTMIN+3
-
-# Instead of pulling this, we are vendoring ourselves
-# FROM nestybox/ubuntu-focal-systemd-docker:latest
 
 # Docker install
 RUN apt-get update && apt-get install --no-install-recommends -y      \
@@ -54,7 +51,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y      \
                                                                       \
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg           \
          | apt-key add - &&                                           \
-	                                                              \
+	                                                                    \
     apt-key fingerprint 0EBFCD88 &&                                   \
                                                                       \
     add-apt-repository                                                \
@@ -97,7 +94,6 @@ ENTRYPOINT [ "/sbin/init", "--log-level=err" ]
 
 # Allow brev to run sudo commands w/o a password
 RUN echo "brev ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
-
 
 ###############################
 ###### BASE DEPENDENCIES ######
