@@ -1,6 +1,0 @@
-bind-addr: 127.0.0.1:8080
-auth: password
-password: 554e326226c3002f0fab6f2a
-cert: false
-proxy-domain: itworks-alecfong1-myorg.brev.sh
-proxy-port-separator: dash
