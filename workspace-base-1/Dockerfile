@@ -80,12 +80,6 @@ COPY default-code-server.yaml /home/brev/.config/code-server/config.yaml
 # VSCode Extension
 COPY brev-vscode.vsix /home/brev/.config/code-server/brev-vscode.vsix
 
-# # Projector
-# RUN pip3 install projector-installer
-# RUN projector --accept-license autoinstall --config-name Webstorm2020.3.3 --ide-name Webstorm\ 2020.3.3 --port 49152
-# RUN projector --accept-license autoinstall --config-name IDEAUltimate2020.3.4 --ide-name IntelliJ\ IDEA\ Ultimate\ 2020.3.4 --port 49153
-# RUN projector --accept-license autoinstall --config-name IDEACommunity2020.3.4 --ide-name IntelliJ\ IDEA\ Community\ Edition\ 2020.3.4 --port 49154
-
 # Vault
 RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add - \
     && apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main" \
