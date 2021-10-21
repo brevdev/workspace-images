@@ -1,0 +1,12 @@
+[Unit]
+Description=vault-agent-restarter timer
+Requires=vault-agent-restarter.service
+
+[Timer]
+Unit=vault-agent-restarter.service
+OnBootSec=4s
+OnUnitInactiveSec=4s
+AccuracySec=1s
+
+[Install]
+WantedBy=timers.target

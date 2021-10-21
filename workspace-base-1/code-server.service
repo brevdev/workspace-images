@@ -1,0 +1,14 @@
+[Unit]
+Description=code-server
+After=network.target
+
+[Service]
+User=brev
+Environment="USER=brev"
+Type=exec
+ExecStart=/usr/bin/code-server --bind-addr 0.0.0.0:22778 /home/brev/workspace
+ExecReload=/usr/bin/code-server --bind-addr 0.0.0.0:22778 /home/brev/workspace
+Restart=always
+
+[Install]
+WantedBy=default.target
