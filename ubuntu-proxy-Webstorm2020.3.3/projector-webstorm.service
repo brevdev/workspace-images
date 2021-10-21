@@ -1,0 +1,14 @@
+[Unit]
+Description=Jetbrains Projector
+After=network.target nss-lookup.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=~/.projector/configs/Webstorm2020.3.3/run.sh
+Restart=on-failure
+RestartPreventExitStatus=23
+
+[Install]
+WantedBy=multi-user.target

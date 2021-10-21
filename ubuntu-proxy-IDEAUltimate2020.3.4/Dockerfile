@@ -15,3 +15,6 @@ RUN apt-get install -y \
 # Projector
 RUN pip3 install projector-installer
 RUN projector --accept-license autoinstall --config-name IDEAUltimate2020.3.4 --ide-name IntelliJ\ IDEA\ Ultimate\ 2020.3.4 --port 49153
+
+COPY projector-ideaultimate.service /lib/systemd/system/
+RUN ln -sf /lib/systemd/system/projector-ideaultimate.service /etc/systemd/system/multi-user.target.wants/projector-ideaultimate.service
