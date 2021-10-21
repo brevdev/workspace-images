@@ -34,8 +34,9 @@ RUN apt-get update &&                            \
        /usr/share/man/*                                               \
        /usr/share/local/* &&                                          \
                                                                       \
-    # Create default 'admin/admin' user
-    useradd --create-home --shell /bin/bash admin && echo "admin:admin" | chpasswd && adduser admin sudo
+    # Create default 'brev/brev' user
+	useradd --create-home --shell /bin/bash brev && echo "brev:brev" | chpasswd && adduser brev sudo 
+
 
 # Make use of stopsignal (instead of sigterm) to stop systemd containers.
 STOPSIGNAL SIGRTMIN+3
@@ -77,14 +78,13 @@ RUN apt-get update && apt-get install --no-install-recommends -y      \
        /usr/share/local/* &&                                          \
                                                                       \
     # Add user "admin" to the Docker group
-    usermod -a -G docker admin
+    usermod -a -G docker brev
 
-# TODO modify this user to be brev user instead of admin
 # Sshd install
 RUN apt-get update && apt-get install --no-install-recommends -y      \
             openssh-server &&                                         \
-    mkdir /home/admin/.ssh &&                                         \
-    chown admin:admin /home/admin/.ssh
+    mkdir /home/brev/.ssh &&                                         \
+    chown brev:brev /home/brev/.ssh
 
 EXPOSE 22
 
@@ -95,9 +95,9 @@ ENTRYPOINT [ "/sbin/init", "--log-level=err" ]
 ###### USER ######
 ##################
 
-# Create Privileged User "Brev"
-RUN adduser --gecos '' --disabled-password brev && \
-  echo "brev ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
+# Allow brev to run sudo commands w/o a password
+RUN echo "brev ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
+
 
 ###############################
 ###### BASE DEPENDENCIES ######
@@ -138,7 +138,6 @@ RUN apt-get install -y \
 # Docker Compose
 RUN curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 RUN chmod +x /usr/local/bin/docker-compose
-RUN usermod -a -G docker brev
 ENV TMPDIR=/home/brev/tmp
 
 USER brev
