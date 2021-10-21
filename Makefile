@@ -1,33 +1,68 @@
+.PHONY: ubuntu-proxy
 DOCKERCMD=docker
 
-pushDocker_WorkspaceBase0:
-	$(eval registry=public.ecr.aws/r3q7i5p9/brev-workspace-env-pub)
+tag ?= $(git rev-parse --short=12 HEAD)
+
+#################
+###### DEV ######
+#################
+
+dev-push-ubuntu-proxy:
+	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
+	$(eval registry=public.ecr.aws/r3q7i5p9/ubuntu-proxy)
 	aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${registry}
-
-	cd workspace-base-0 && $(DOCKERCMD) build -t ${registry} .
-	$(DOCKERCMD) push ${registry}:latest
-
-pushDocker_WorkspaceBase1Dev:
-	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
-	$(eval registry=public.ecr.aws/r3q7i5p9/brev-workspace-env-pub)
-	aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${registry}  
-
-	cd workspace-base-1 && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
+	cd ubuntu-proxy && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
 	$(DOCKERCMD) push ${registry}:${tag}
 
-pushDocker_UbuntuProxyIDEACommunity2020.3.4_Dev:
+dev-push-ubuntu-proxy-ideacommunity2020.3.4:
 	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
-	$(eval registry=public.ecr.aws/r3q7i5p9/ubuntu-proxy-ideacommunity2020)
-	aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${registry}  
-
-	cd ubuntu-proxy-IDEACommunity2020.3.4 && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
+	$(eval registry=public.ecr.aws/r3q7i5p9/ubuntu-proxy-ideacommunity202034)
+	aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${registry}
+	cd ubuntu-proxy-ideacommunity2020.3.4 && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
 	$(DOCKERCMD) push ${registry}:${tag}
 
-pushDocker_WorkspaceBase1Prod:
+dev-push-ubuntu-proxy-ideaultimate2020.3.4:
 	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
-	$(eval registry=brevdev/workspace-ubuntu-20)
+	$(eval registry=public.ecr.aws/r3q7i5p9/ubuntu-proxy-ideaultimate202034)
+	aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${registry}
+	cd ubuntu-proxy-ideaultimate2020.3.4 && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
+	$(DOCKERCMD) push ${registry}:${tag}
+
+dev-push-ubuntu-proxy-webstorm2020.3.3:
+	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
+	$(eval registry=public.ecr.aws/r3q7i5p9/ubuntu-proxy-webstorm202033)
+	aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${registry}
+	cd ubuntu-proxy-webstorm2020.3.3 && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
+	$(DOCKERCMD) push ${registry}:${tag}
+
+##################
+###### PROD ######
+##################
+
+prod-push-ubuntu-proxy:
+	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
+	$(eval registry=brevdev/ubuntu-proxy)
 	docker login
+	cd ubuntu-proxy && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
+	$(DOCKERCMD) push ${registry}:${tag}
 
-	cd workspace-base-1 && $(DOCKERCMD) build --no-cache -t ${registry}:${tag} . && cd -
+prod-push-ubuntu-proxy-ideacommunity2020.3.4:
+	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
+	$(eval registry=brevdev/ubuntu-proxy-ideacommunity202034)
+	docker login
+	cd ubuntu-proxy-ideacommunity2020.3.4 && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
+	$(DOCKERCMD) push ${registry}:${tag}
 
+prod-push-ubuntu-proxy-ideaultimate2020.3.4:
+	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
+	$(eval registry=brevdev/ubuntu-proxy-ideaultimate202034)
+	docker login
+	cd ubuntu-proxy-ideaultimate2020.3.4 && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
+	$(DOCKERCMD) push ${registry}:${tag}
+
+prod-push-ubuntu-proxy-webstorm2020.3.3:
+	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
+	$(eval registry=brevdev/ubuntu-proxy-webstorm202033)
+	docker login
+	cd ubuntu-proxy-webstorm2020.3.3 && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
 	$(DOCKERCMD) push ${registry}:${tag}
