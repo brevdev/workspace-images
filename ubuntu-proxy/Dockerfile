@@ -139,6 +139,7 @@ ENV TMPDIR=/home/brev/tmp
 USER brev
 RUN mkdir /home/brev/tmp
 USER root
+RUN chown -R 1000:1000 /tmp
 
 ######################
 ###### SOFTWARE ######
