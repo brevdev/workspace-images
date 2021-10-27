@@ -1,4 +1,4 @@
-FROM brevdev/workspace-ubuntu-20:latest
+FROM brevdev/ubuntu-proxy:0.1.14
 
 # Projector Dependencies
 RUN apt-get update &&                            \
