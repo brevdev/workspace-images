@@ -95,13 +95,6 @@ prod-push-ubuntu-proxy-datagrip2020.3.2:
 	cd ubuntu-proxy-datagrip2020.3.2 && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
 	$(DOCKERCMD) push ${registry}:${tag}
 
-prod-push-ubuntu-proxy-dataspell2021.3:
-	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
-	$(eval registry=brevdev/ubuntu-proxy-dataspell20213)
-	docker login
-	cd ubuntu-proxy-dataspell2021.3 && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
-	$(DOCKERCMD) push ${registry}:${tag}
-
 prod-push-ubuntu-proxy-goland2020.3.5:
 	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
 	$(eval registry=brevdev/ubuntu-proxy-goland202035)
