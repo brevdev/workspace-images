@@ -14,8 +14,10 @@ RUN apt-get update &&                            \
             libxi6                               
 
 # Projector
+USER brev
 RUN pip3 install projector-installer
 RUN projector --accept-license autoinstall --config-name Webstorm2020.3.3 --ide-name Webstorm\ 2020.3.3 --port 49152
+USER root
 
 COPY projector-webstorm.service /lib/systemd/system/
 RUN ln -sf /lib/systemd/system/projector-webstorm.service /etc/systemd/system/multi-user.target.wants/projector-webstorm.service

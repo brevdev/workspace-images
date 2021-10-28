@@ -172,5 +172,6 @@ RUN ln -sf /lib/systemd/system/vault-utils.service /etc/systemd/system/default.t
 ###### MACHINE CONFIG ######
 ############################
 
+RUN chown brev /home/brev/.config
 WORKDIR /home/brev/workspace
 EXPOSE 22778
