@@ -14,8 +14,8 @@ RUN apt-get update &&                            \
             libxi6                               
 
 # Projector
-USER brev
 RUN pip3 install projector-installer
+USER brev
 RUN projector --accept-license autoinstall --config-name Webstorm2020.3.3 --ide-name Webstorm\ 2020.3.3 --port 49152
 USER root
 
