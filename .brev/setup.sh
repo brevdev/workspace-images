@@ -53,5 +53,9 @@ set -euo pipefail
 # rm go1.16.7.linux-amd64.tar.gz
 
 ##### Custom commands #####
-(echo ""; echo "##### Custom commands #####"; echo "";)
-(echo ""; echo "Nothing needed! Everything is pre-installed on the base image."; echo "";)
+# (echo ""; echo "##### Custom commands #####"; echo "";)
+# npm install
+
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
