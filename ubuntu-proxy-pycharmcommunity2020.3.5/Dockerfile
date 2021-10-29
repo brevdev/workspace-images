@@ -15,7 +15,9 @@ RUN apt-get update &&                            \
 
 # Projector
 RUN pip3 install projector-installer
+USER brev
 RUN projector --accept-license autoinstall --config-name PycharmCommunity2020.3.5 --ide-name Pycharm\ Community\ Edition\ 2020.3.5 --port 49155
+USER root
 
 COPY projector-pycharmcommunity.service /lib/systemd/system/
 RUN ln -sf /lib/systemd/system/projector-pycharmcommunity.service /etc/systemd/system/multi-user.target.wants/projector-pycharmcommunity.service

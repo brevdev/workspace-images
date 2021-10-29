@@ -15,7 +15,9 @@ RUN apt-get update &&                            \
 
 # Projector
 RUN pip3 install projector-installer
+USER brev
 RUN projector --accept-license autoinstall --config-name DataGrip2020.3.2 --ide-name DataGrip\ 2020.3.2 --port 49159
+USER root
 
 COPY projector-datagrip.service /lib/systemd/system/
 RUN ln -sf /lib/systemd/system/projector-datagrip.service /etc/systemd/system/multi-user.target.wants/projector-datagrip.service

@@ -15,7 +15,9 @@ RUN apt-get update &&                            \
 
 # Projector
 RUN pip3 install projector-installer
+USER brev
 RUN projector --accept-license autoinstall --config-name RubyMine2020.3.2 --ide-name RubyMine\ 2020.3.2 --port 49161
+USER root
 
 COPY projector-rubymine.service /lib/systemd/system/
 RUN ln -sf /lib/systemd/system/projector-rubymine.service /etc/systemd/system/multi-user.target.wants/projector-rubymine.service

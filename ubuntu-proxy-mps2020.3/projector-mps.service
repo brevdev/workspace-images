@@ -5,8 +5,8 @@ Wants=network-online.target
 
 [Service]
 Type=simple
-User=root
-ExecStart=/root/.projector/configs/MPS2020.3/run.sh
+User=brev
+ExecStart=/home/brev/.projector/configs/MPS2020.3/run.sh
 Restart=on-failure
 RestartPreventExitStatus=23
 

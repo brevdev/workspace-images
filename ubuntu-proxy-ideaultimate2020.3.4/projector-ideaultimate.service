@@ -5,8 +5,8 @@ Wants=network-online.target
 
 [Service]
 Type=simple
-User=root
-ExecStart=/root/.projector/configs/IDEAUltimate2020.3.4/run.sh
+User=brev
+ExecStart=/home/brev/.projector/configs/IDEAUltimate2020.3.4/run.sh
 Restart=on-failure
 RestartPreventExitStatus=23
 

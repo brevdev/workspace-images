@@ -143,3 +143,34 @@ prod-push-ubuntu-proxy-rubymine2020.3.2:
 	docker login
 	cd ubuntu-proxy-rubymine2020.3.2 && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
 	$(DOCKERCMD) push ${registry}:${tag}
+
+prod-push-all-jetbrains-ides:
+	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
+	make prod-push-ubuntu-proxy-ideacommunity2020.3.4 tag=${tag}
+	make prod-push-ubuntu-proxy-ideaultimate2020.3.4 tag=${tag}
+	make prod-push-ubuntu-proxy-clion2020.3.4 tag=${tag}
+	make prod-push-ubuntu-proxy-datagrip2020.3.2 tag=${tag}
+	make prod-push-ubuntu-proxy-goland2020.3.5 tag=${tag}
+	make prod-push-ubuntu-proxy-mps2020.3 tag=${tag}
+	make prod-push-ubuntu-proxy-phpstorm2020.3.3 tag=${tag}
+	make prod-push-ubuntu-proxy-pycharmcommunity2020.3.5 tag=${tag}
+	make prod-push-ubuntu-proxy-pycharmprofessional2020.3.5 tag=${tag}
+	make prod-push-ubuntu-proxy-rider2020.3.4 tag=${tag}
+	make prod-push-ubuntu-proxy-rubymine2020.3.2 tag=${tag}
+	make prod-push-ubuntu-proxy-webstorm2020.3.3 tag=${tag}
+
+prod-push-all-ides:
+	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
+	make prod-push-ubuntu-proxy-ideacommunity2020.3.4 tag=${tag}
+	make prod-push-ubuntu-proxy-ideaultimate2020.3.4 tag=${tag}
+	make prod-push-ubuntu-proxy-webstorm2020.3.3 tag=${tag}
+	make prod-push-ubuntu-proxy-clion2020.3.4 tag=${tag}
+	make prod-push-ubuntu-proxy-datagrip2020.3.2 tag=${tag}
+	make prod-push-ubuntu-proxy-goland2020.3.5 tag=${tag}
+	make prod-push-ubuntu-proxy-mps2020.3 tag=${tag}
+	make prod-push-ubuntu-proxy-phpstorm2020.3.3 tag=${tag}
+	make prod-push-ubuntu-proxy-pycharmcommunity2020.3.5 tag=${tag}
+	make prod-push-ubuntu-proxy-pycharmprofessional2020.3.5 tag=${tag}
+	make prod-push-ubuntu-proxy-rider2020.3.4 tag=${tag}
+	make prod-push-ubuntu-proxy-rubymine2020.3.2 tag=${tag}
+	make prod-push-ubuntu-proxy-rstudio1.4.1717 tag=${tag}

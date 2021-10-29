@@ -15,7 +15,9 @@ RUN apt-get update &&                            \
 
 # Projector
 RUN pip3 install projector-installer
+USER brev
 RUN projector --accept-license autoinstall --config-name GoLand2020.3.5 --ide-name GoLand\ 2020.3.5 --port 49158
+USER root
 
 COPY projector-goland.service /lib/systemd/system/
 RUN ln -sf /lib/systemd/system/projector-goland.service /etc/systemd/system/multi-user.target.wants/projector-goland.service

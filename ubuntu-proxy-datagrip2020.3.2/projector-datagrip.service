@@ -5,8 +5,8 @@ Wants=network-online.target
 
 [Service]
 Type=simple
-User=root
-ExecStart=/root/.projector/configs/DataGrip2020.3.2/run.sh
+User=brev
+ExecStart=/home/brev/.projector/configs/DataGrip2020.3.2/run.sh
 Restart=on-failure
 RestartPreventExitStatus=23
 

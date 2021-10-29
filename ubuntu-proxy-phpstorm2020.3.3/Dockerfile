@@ -15,7 +15,9 @@ RUN apt-get update &&                            \
 
 # Projector
 RUN pip3 install projector-installer
+USER brev
 RUN projector --accept-license autoinstall --config-name PhpStorm2020.3.3 --ide-name PhpStorm\ 2020.3.3 --port 49160
+USER root
 
 COPY projector-phpstorm.service /lib/systemd/system/
 RUN ln -sf /lib/systemd/system/projector-phpstorm.service /etc/systemd/system/multi-user.target.wants/projector-phpstorm.service

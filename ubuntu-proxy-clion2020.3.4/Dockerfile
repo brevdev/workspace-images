@@ -15,7 +15,9 @@ RUN apt-get update &&                            \
 
 # Projector
 RUN pip3 install projector-installer
+USER brev
 RUN projector --accept-license autoinstall --config-name CLion2020.3.4 --ide-name CLion\ 2020.3.4 --port 49157
+USER root
 
 COPY projector-clion.service /lib/systemd/system/
 RUN ln -sf /lib/systemd/system/projector-clion.service /etc/systemd/system/multi-user.target.wants/projector-clion.service
