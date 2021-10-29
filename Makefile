@@ -1,7 +1,5 @@
-.PHONY: ubuntu-proxy
+.PHONY: dev-push-ubuntu-proxy dev-run-ubuntu-proxy
 DOCKERCMD=docker
-
-tag ?= $(git rev-parse --short=12 HEAD)
 
 #################
 ###### DEV ######
@@ -13,6 +11,14 @@ dev-push-ubuntu-proxy:
 	aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${registry}
 	cd ubuntu-proxy && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
 	$(DOCKERCMD) push ${registry}:${tag}
+
+dev-run-ubuntu-proxy: dev-push-ubuntu-proxy
+	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
+	$(eval registry=public.ecr.aws/r3q7i5p9/ubuntu-proxy)
+	docker run  --privileged=true --name ubuntu-proxy --rm -i -t  ${registry}:${tag} bash
+
+dev-shell-ubuntu-proxy:
+	docker exec -it ubuntu-proxy bash
 
 dev-push-ubuntu-proxy-ideacommunity2020.3.4:
 	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
