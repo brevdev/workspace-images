@@ -134,11 +134,6 @@ RUN apt-get install -y \
 # Docker Compose
 RUN curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 RUN chmod +x /usr/local/bin/docker-compose
-ENV TMPDIR=/home/brev/tmp
-
-USER brev
-RUN mkdir /home/brev/tmp
-USER root
 
 ######################
 ###### SOFTWARE ######
