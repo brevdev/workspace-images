@@ -132,6 +132,7 @@ RUN apt-get install -y \
   ca-certificates \
   lsof
 
+RUN yes | unminimize 
 # Docker Compose
 RUN curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 RUN chmod +x /usr/local/bin/docker-compose
@@ -166,6 +167,7 @@ RUN ln -sf /lib/systemd/system/vault-utils.service /etc/systemd/system/default.t
 
 # brev cli
 RUN sh -c "`curl -sf -L https://raw.githubusercontent.com/brevdev/brev-cli/main/bin/install-latest.sh`"
+
 
 ############################
 ###### MACHINE CONFIG ######
