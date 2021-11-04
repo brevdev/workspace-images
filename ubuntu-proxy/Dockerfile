@@ -129,7 +129,8 @@ RUN apt-get install -y \
   rsync \
   python-is-python3 \
   software-properties-common \
-  ca-certificates
+  ca-certificates \
+  lsof
 
 # Docker Compose
 RUN curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
@@ -146,7 +147,7 @@ RUN ln -sf /lib/systemd/system/code-server.service /etc/systemd/system/multi-use
 RUN mkdir -p /home/brev/.config/code-server
 COPY default-code-server.yaml /home/brev/.config/code-server/config.yaml
 
-# VSCode Extension
+# Brev vscode Extension
 COPY brev-vscode.vsix /home/brev/.config/code-server/brev-vscode.vsix
 
 # Vault
