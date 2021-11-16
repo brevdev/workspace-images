@@ -180,4 +180,4 @@ EXPOSE 22778
 ###################################
 #### UX & QUALITY IMPROVEMENTS ####
 ###################################
-RUN git config --global pager.branch false
+ENV GIT_PAGER=cat
