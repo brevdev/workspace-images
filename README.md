@@ -18,8 +18,33 @@ $ make dev-shell-ubuntu-proxy
 ```
 
 ## release commands
+
+get the current release version for `ubuntu-proxy`
+
 ```
-$ make prod-push-ubuntu-proxy tag=0.1.16
-$ aws dynamodb update-item --table-name brev-deploy-prod  --key '{"pk": {"S": "workspace_template:4nbb4lg2s"}, "sk": {"S": "workspace_template"}}' --attribute-updates '{"image": {"Value": {"S": "brevdev/ubuntu-proxy:0.1.16"},"Action": "PUT"}}' --return-values UPDATED_NEW 
-$ 
+$ aws dynamodb get-item --table-name brev-deploy-prod  \
+                        --key '{"pk": {"S": "workspace_template:4nbb4lg2s"}, "sk": {"S": "workspace_template"}}' \
+                        --region us-east-1 \
+                        --projection-expression "#I" \
+                        --expression-attribute-names '{ "#I": "image"}'
+
+```
+
+Output:
+
+```
+{
+    "Item": {
+        "image": {
+            "S": "brevdev/ubuntu-proxy:0.1.16"
+        }
+    }
+}
+
+```
+
+Create new release
+
+```
+$ make prod-push-ubuntu-proxy tag=0.1.17
 ```
