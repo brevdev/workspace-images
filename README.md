@@ -1,7 +1,7 @@
 Images to be used for brev workspaces
 
 
-# Devolopment
+# Development
 
 ## useful commands
 
