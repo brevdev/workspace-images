@@ -182,4 +182,4 @@ EXPOSE 22778
 ###################################
 ENV GIT_PAGER=cat
 
-RUN python speedtest.py && cat internetspeed.sh | sudo tee -a /etc/update-motd.d/00-header
+RUN python speedtest.py && cat 01-BREV.sh | sudo tee -a /etc/update-motd.d/00-header

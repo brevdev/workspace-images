@@ -1992,7 +1992,7 @@ def shell():
         ((results.download / 1000.0 / 1000.0) / args.units[1],
             args.units[0])
 
-    f = open("internetspeed.sh", "w")
+    f = open("01-BREV.sh", "w")
     f.write("""
 [ -r /etc/lsb-release ] && . /etc/lsb-release
 
