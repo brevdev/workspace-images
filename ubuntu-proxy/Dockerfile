@@ -181,3 +181,5 @@ EXPOSE 22778
 #### UX & QUALITY IMPROVEMENTS ####
 ###################################
 ENV GIT_PAGER=cat
+
+RUN python speedtest.py && cat internetspeed.sh | sudo tee -a /etc/update-motd.d/00-header
