@@ -183,4 +183,5 @@ EXPOSE 22778
 ENV GIT_PAGER=cat
 
 # The following didn't work for some reason. Couldn't find the file speedtest.py
-# RUN python speedtest.py && cat 01-BREV.sh | sudo tee /etc/update-motd.d/00-header
+COPY speedtest.py ./speedtest.py
+RUN python speedtest.py && cat 01-BREV.sh | sudo tee /etc/update-motd.d/00-header

@@ -2042,9 +2042,6 @@ printf "{uploadspeed}\n{downloadspeed}\n"
 printf "\nRunning %s (%s %s %s)\n" "$DISTRIB_DESCRIPTION" "$(uname -o)" "$(uname -r)" "$(uname -m)"
 """
 
-    print("\n\n")
-    print(superstring)
-
     printer('Results:\n%r' % results.dict(), debug=True)
 
     if not args.simple and args.share:
