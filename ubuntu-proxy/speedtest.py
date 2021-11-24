@@ -1994,6 +1994,7 @@ def shell():
 
     f = open("01-BREV.sh", "w")
     f.write("""
+#!/bin/sh
 [ -r /etc/lsb-release ] && . /etc/lsb-release
 
 if [ -z "$DISTRIB_DESCRIPTION" ] && [ -x /usr/bin/lsb_release ]; then
