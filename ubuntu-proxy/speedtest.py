@@ -1961,8 +1961,8 @@ def shell():
 
 
 
-        
-         
+
+
     else:
         printer('Skipping download test', quiet)
 
@@ -1980,7 +1980,7 @@ def shell():
                  args.units[0]),
                 quiet)
 
-            
+
     else:
         printer('Skipping upload test', quiet)
 
@@ -1993,8 +1993,7 @@ def shell():
             args.units[0])
 
     f = open("01-BREV.sh", "w")
-    f.write("""
-#!/bin/sh
+    f.write("""#!/bin/sh
 [ -r /etc/lsb-release ] && . /etc/lsb-release
 
 if [ -z "$DISTRIB_DESCRIPTION" ] && [ -x /usr/bin/lsb_release ]; then
