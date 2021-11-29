@@ -165,6 +165,9 @@ RUN wget https://github.com/brevdev/vault-utils/releases/download/v0.2.0/vault-u
 COPY vault-utils.service /lib/systemd/system/
 RUN ln -sf /lib/systemd/system/vault-utils.service /etc/systemd/system/default.target.wants/vault-utils.service
 
+# Vim
+RUN apt-get install -y vim
+
 # brev cli
 RUN sh -c "`curl -sf -L https://raw.githubusercontent.com/brevdev/brev-cli/main/bin/install-latest.sh`"
 
@@ -181,6 +184,7 @@ EXPOSE 22778
 #### UX & QUALITY IMPROVEMENTS ####
 ###################################
 ENV GIT_PAGER=cat
+ENV GIT_EDITOR=vim
 
 # The following didn't work for some reason. Couldn't find the file speedtest.py
 COPY speedtest.py ./speedtest.py
