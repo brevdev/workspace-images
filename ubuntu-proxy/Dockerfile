@@ -171,7 +171,6 @@ RUN apt-get install -y emacs vim
 # brev cli
 RUN sh -c "`curl -sf -L https://raw.githubusercontent.com/brevdev/brev-cli/main/bin/install-latest.sh`"
 
-
 ############################
 ###### MACHINE CONFIG ######
 ############################
@@ -187,5 +186,9 @@ ENV GIT_PAGER=cat
 ENV GIT_EDITOR=vim
 
 # The following didn't work for some reason. Couldn't find the file speedtest.py
-COPY speedtest.py ./speedtest.py
-RUN python speedtest.py && cat 01-BREV.sh | sudo tee /etc/update-motd.d/00-header
+# COPY speedtest.py ./speedtest.py
+COPY speedtest-output.sh ./speedtest-output.sh
+# RUN python speedtest.py && cat speedtest-output.sh | sudo tee /etc/update-motd.d/00-header
+RUN cat ./speedtest-output.sh > /etc/update-motd.d/00-header
+RUN sudo rm /etc/update-motd.d/10-help-text
+RUN sudo rm /etc/update-motd.d/50-motd-news
