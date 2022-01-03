@@ -192,3 +192,6 @@ COPY speedtest-output.sh ./speedtest-output.sh
 RUN cat ./speedtest-output.sh > /etc/update-motd.d/00-header
 RUN sudo rm /etc/update-motd.d/10-help-text
 RUN sudo rm /etc/update-motd.d/50-motd-news
+
+COPY run-speed-test /opt/run-speed-test.py
+COPY alias speed-test="python /opt/run-speed-test.py"
