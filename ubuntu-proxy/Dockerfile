@@ -195,3 +195,5 @@ RUN sudo rm /etc/update-motd.d/50-motd-news
 
 COPY run-speed-test /opt/run-speed-test.py
 COPY alias speed-test="python /opt/run-speed-test.py"
+RUN echo 'alias speed-test="python /opt/run-speed-test.py"' >> /home/brev/.bash_profile
+RUN echo 'alias speed-test="python /opt/run-speed-test.py"' >> /home/brev/.zshrc
