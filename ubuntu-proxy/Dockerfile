@@ -79,9 +79,10 @@ RUN apt-get update && apt-get install --no-install-recommends -y      \
 
 # Sshd install
 RUN apt-get update && apt-get install --no-install-recommends -y      \
-  openssh-server &&                                         \
-  mkdir /home/brev/.ssh &&                                         \
-  chown brev:brev /home/brev/.ssh
+  openssh-server &&                                                   \
+  mkdir /home/brev/.ssh &&                                            \
+  chown brev:brev /home/brev/.ssh &&                                  \
+  echo "PasswordAuthentication no" >> /etc/ssh/sshd_config
 
 EXPOSE 22
 
@@ -169,7 +170,8 @@ RUN ln -sf /lib/systemd/system/vault-utils.service /etc/systemd/system/default.t
 RUN apt-get install -y emacs vim
 
 # brev cli
-RUN sh -c "`curl -sf -L https://raw.githubusercontent.com/brevdev/brev-cli/main/bin/install-latest.sh`"
+RUN sh -c "`curl -sf -L https://raw.githubusercontent.com/brevdev/brev-cli/main/bin/install-latest.sh?`"
+RUN mv /opt/brev/bin/brev /usr/bin
 
 ############################
 ###### MACHINE CONFIG ######
@@ -192,3 +194,7 @@ COPY speedtest-output.sh ./speedtest-output.sh
 RUN cat ./speedtest-output.sh > /etc/update-motd.d/00-header
 RUN sudo rm /etc/update-motd.d/10-help-text
 RUN sudo rm /etc/update-motd.d/50-motd-news
+
+COPY speed_test.py /usr/bin/speedtest
+
+# RUN yes \n | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
