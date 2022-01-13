@@ -6,8 +6,8 @@ After=network.target
 User=brev
 Environment="USER=brev"
 Type=exec
-ExecStart=/usr/bin/huproxy -listen 127.0.0.1:22779
-ExecReload=/usr/bin/huproxy -listen 127.0.0.1:22779
+ExecStart=/usr/bin/huproxy -listen 0.0.0.0:22779
+ExecReload=/usr/bin/huproxy -listen 0.0.0.0:22779
 Restart=always
 
 [Install]
