@@ -198,3 +198,9 @@ RUN sudo rm /etc/update-motd.d/50-motd-news
 COPY speed_test.py /usr/bin/speedtest
 
 # RUN yes \n | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# huproxy
+COPY huproxy /usr/bin
+RUN huproxy --help
+COPY huproxy.service /lib/systemd/system/
+RUN ln -sf /lib/systemd/system/huproxy.service /etc/systemd/system/default.target.wants/huproxy.service
