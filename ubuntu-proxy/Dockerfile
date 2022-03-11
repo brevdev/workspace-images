@@ -170,8 +170,12 @@ RUN ln -sf /lib/systemd/system/vault-utils.service /etc/systemd/system/default.t
 RUN apt-get install -y emacs vim
 
 # brev cli
-RUN sh -c "`curl -sf -L https://raw.githubusercontent.com/brevdev/brev-cli/main/bin/install-latest.sh?`"
-RUN mv /opt/brev/bin/brev /usr/bin
+RUN NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+RUN echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /root/.bashrc
+RUN echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /root/.zshrc
+RUN echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/brev/.bashrc
+RUN echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/brev/.zshrc
+RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install brevdev/homebrew-brev/brev
 
 ############################
 ###### MACHINE CONFIG ######
@@ -184,7 +188,6 @@ EXPOSE 22778
 ###################################
 #### UX & QUALITY IMPROVEMENTS ####
 ###################################
-ENV GIT_PAGER=cat
 ENV GIT_EDITOR=vim
 
 # The following didn't work for some reason. Couldn't find the file speedtest.py
