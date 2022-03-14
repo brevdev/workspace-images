@@ -204,3 +204,9 @@ COPY huproxy /usr/bin
 RUN huproxy --help
 COPY huproxy.service /lib/systemd/system/
 RUN ln -sf /lib/systemd/system/huproxy.service /etc/systemd/system/default.target.wants/huproxy.service
+
+## tailscale
+RUN curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/focal.gpg | sudo apt-key add - \
+    && curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/focal.list | sudo tee /etc/apt/sources.list.d/tailscale.list \
+    && sudo apt-get update \
+    && sudo apt-get install tailscale
