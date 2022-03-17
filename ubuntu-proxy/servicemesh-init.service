@@ -1,0 +1,10 @@
+[Unit]
+Description=servicemesh-init
+After=network.target
+
+[Service]
+User=root
+ExecStart=brev tasks configure --all --user brev
+
+[Install]
+WantedBy=default.target
