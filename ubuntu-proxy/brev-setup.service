@@ -1,0 +1,11 @@
+[Unit]
+Description=brev-setup
+After=network.target
+
+[Service]
+User=root
+WorkingDirectory=/home/brev/workspace
+ExecStart=brev setupworkspace
+
+[Install]
+WantedBy=default.target

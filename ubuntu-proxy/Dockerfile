@@ -208,7 +208,12 @@ RUN echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/brev/
 RUN echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/brev/.zshrc
 
 # brev cli
-RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install brevdev/homebrew-brev/brev && echo "0.6.31"
+# RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install brevdev/homebrew-brev/brev && echo "0.6.31"
+COPY brev /usr/local/bin
+
+# brev setup 
+COPY brev-setup.service /lib/systemd/system/
+RUN ln -sf /lib/systemd/system/brev-setup.service /etc/systemd/system/default.target.wants/brev-setup.service
 
 # brev vpn configure
 COPY servicemesh-init.service /lib/systemd/system/
