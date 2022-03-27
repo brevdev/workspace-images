@@ -210,6 +210,7 @@ RUN echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/brev/
 # brev cli
 # RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install brevdev/homebrew-brev/brev && echo "0.6.31"
 COPY brev /usr/local/bin
+RUN chmod +x  /usr/local/bin/brev
 
 # brev setup 
 COPY brev-setup.service /lib/systemd/system/
