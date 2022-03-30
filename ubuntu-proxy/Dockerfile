@@ -145,7 +145,7 @@ RUN chmod +x /usr/local/bin/docker-compose
 # Code Server + VSCode
 RUN curl -fsSL https://raw.githubusercontent.com/brevdev/code-server/main/install.sh | sh
 COPY code-server.service /lib/systemd/system/
-RUN ln -sf /lib/systemd/system/code-server.service /etc/systemd/system/multi-user.target.wants/code-server.service
+# RUN ln -sf /lib/systemd/system/code-server.service /etc/systemd/system/multi-user.target.wants/code-server.service
 RUN mkdir -p /home/brev/.config/code-server
 COPY default-code-server.yaml /home/brev/.config/code-server/config.yaml
 
@@ -208,13 +208,13 @@ RUN echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/brev/
 RUN echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/brev/.zshrc
 
 # brev cli
-# RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install brevdev/homebrew-brev/brev && echo "0.6.31"
-COPY brev /usr/local/bin
-RUN chmod +x  /usr/local/bin/brev
+RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install brevdev/homebrew-brev/brev && echo "0.6.31"
+# COPY brev /usr/local/bin
+# RUN chmod +x  /usr/local/bin/brev
 
 # brev setup 
-COPY brev-setup.service /lib/systemd/system/
-RUN ln -sf /lib/systemd/system/brev-setup.service /etc/systemd/system/default.target.wants/brev-setup.service
+# COPY brev-setup.service /lib/systemd/system/
+# RUN ln -sf /lib/systemd/system/brev-setup.service /etc/systemd/system/default.target.wants/brev-setup.service
 
 # brev vpn configure
 COPY servicemesh-init.service /lib/systemd/system/
