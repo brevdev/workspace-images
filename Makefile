@@ -15,6 +15,7 @@ dev-push-ubuntu-proxy:
 dev-run-ubuntu-proxy: dev-push-ubuntu-proxy
 	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
 	$(eval registry=public.ecr.aws/r3q7i5p9/ubuntu-proxy)
+	docker kill ubuntu-proxy || true
 	docker run  --privileged=true --name ubuntu-proxy --rm -i -t  ${registry}:${tag} bash
 
 dev-shell-ubuntu-proxy:

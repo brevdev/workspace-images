@@ -5,7 +5,7 @@ After=network.target
 [Service]
 User=root
 WorkingDirectory=/home/brev/workspace
-ExecStart=brev sshmon
+ExecStart=/home/linuxbrew/.linuxbrew/bin/brev sshmon
 
 [Install]
 WantedBy=default.target
