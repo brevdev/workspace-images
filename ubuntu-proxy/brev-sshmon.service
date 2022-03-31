@@ -3,7 +3,7 @@ Description=brev-sshmon
 After=network.target
 
 [Service]
-User=root
+User=brev
 WorkingDirectory=/home/brev/workspace
 ExecStart=/home/linuxbrew/.linuxbrew/bin/brev sshmon
 

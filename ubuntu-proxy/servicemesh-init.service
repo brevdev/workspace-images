@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 User=root
-ExecStart=brev tasks configure --user brev
+ExecStart=/home/linuxbrew/.linuxbrew/bin/brev tasks configure --user brev
 
 [Install]
 WantedBy=default.target
