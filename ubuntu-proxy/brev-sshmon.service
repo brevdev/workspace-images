@@ -1,0 +1,11 @@
+[Unit]
+Description=brev-sshmon
+After=network.target
+
+[Service]
+User=root
+WorkingDirectory=/home/brev/workspace
+ExecStart=brev sshmon
+
+[Install]
+WantedBy=default.target
