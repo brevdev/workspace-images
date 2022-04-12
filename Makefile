@@ -64,6 +64,8 @@ prod-push-ubuntu-proxy: diff
 	cd ubuntu-proxy && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
 	$(DOCKERCMD) push ${registry}:${tag}
 	git tag ${registry}-${tag} && git push origin ${registry}-${tag}
+	echo "Enter anything to update db or ctrl c"; \
+    read a;
 	aws dynamodb update-item --table-name brev-deploy-prod  --key '{"pk": {"S": "workspace_template:4nbb4lg2s"}, "sk": {"S": "workspace_template"}}' --attribute-updates '{"image": {"Value": {"S": "registry.hub.docker.com/brevdev/ubuntu-proxy:${tag}"},"Action": "PUT"}}' --return-values UPDATED_NEW --region us-east-1
 
 prod-push-ubuntu-proxy-ideacommunity2020.3.4: diff
