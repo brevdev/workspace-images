@@ -216,8 +216,8 @@ COPY brev-sshmon.service /lib/systemd/system/
 RUN ln -sf /lib/systemd/system/brev-sshmon.service /etc/systemd/system/default.target.wants/brev-sshmon.service
 
 # brev setup 
-# COPY brev-setup.service /lib/systemd/system/
-# RUN ln -sf /lib/systemd/system/brev-setup.service /etc/systemd/system/default.target.wants/brev-setup.service
+COPY brev-setup.service /lib/systemd/system/
+RUN ln -sf /lib/systemd/system/brev-setup.service /etc/systemd/system/default.target.wants/brev-setup.service
 
 # brev vpn configure
 COPY servicemesh-init.service /lib/systemd/system/
