@@ -191,16 +191,11 @@ RUN sudo rm /etc/update-motd.d/50-motd-news
 
 COPY speed_test.py /usr/bin/speedtest
 
-# RUN yes \n | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
 # huproxy
 COPY huproxy /usr/bin
 RUN huproxy --help
 COPY huproxy.service /lib/systemd/system/
 RUN ln -sf /lib/systemd/system/huproxy.service /etc/systemd/system/default.target.wants/huproxy.service
-
-RUN echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /root/.bashrc
-RUN echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /root/.zshrc
 
 # brev sshmon
 COPY brev-sshmon.service /lib/systemd/system/
@@ -210,19 +205,23 @@ RUN ln -sf /lib/systemd/system/brev-sshmon.service /etc/systemd/system/default.t
 COPY servicemesh-init.service /lib/systemd/system/
 RUN ln -sf /lib/systemd/system/servicemesh-init.service /etc/systemd/system/default.target.wants/servicemesh-init.service
 
-# brev setup 
+# brev setup
 COPY brev-setup.service /lib/systemd/system/
 RUN ln -sf /lib/systemd/system/brev-setup.service /etc/systemd/system/default.target.wants/brev-setup.service
+
+
 
 USER brev
 
 # brew
 RUN NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-RUN echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/brev/.bashrc
-RUN echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/brev/.zshrc
+RUN echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/brev/.bashrc && echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/brev/.zshrc
 
 # brev cli
-RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install brevdev/homebrew-brev/brev && echo "0.6.45"
-USER root
+RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install brevdev/homebrew-brev/brev && echo "0.6.57"
 # COPY brev /usr/local/bin
 # RUN chmod +x  /usr/local/bin/brev
+USER root
+
+RUN echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /root/.bashrc && echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /root/.zshrc
+
