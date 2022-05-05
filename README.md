@@ -57,7 +57,7 @@ get the current release version for `ubuntu-proxy`
 
 ```
 $ aws dynamodb get-item --table-name brev-deploy-prod  \
-                        --key '{"pk": {"S": "workspace_template:4nbb4lg2s"}, "sk": {"S": "workspace_template"}}' \
+                        --key '{"pk": {"S": "workspace_template:v7nd45zsc"}, "sk": {"S": "workspace_template"}}' \
                         --region us-east-1 \
                         --projection-expression "#I" \
                         --expression-attribute-names '{ "#I": "image"}'
