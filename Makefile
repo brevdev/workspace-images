@@ -5,14 +5,18 @@ DOCKERCMD=docker
 ###### DEV ######
 #################
 
-dev-push-ubuntu-proxy:
+build-ubuntu-proxy:
+	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
+	$(eval registry=public.ecr.aws/r3q7i5p9/ubuntu-proxy)
+	cd ubuntu-proxy && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
+
+dev-push-ubuntu-proxy: build-ubuntu-proxy
 	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
 	$(eval registry=public.ecr.aws/r3q7i5p9/ubuntu-proxy)
 	aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${registry}
-	cd ubuntu-proxy && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
 	$(DOCKERCMD) push ${registry}:${tag}
 
-dev-run-ubuntu-proxy: dev-push-ubuntu-proxy
+dev-run-ubuntu-proxy: build-ubuntu-proxy
 	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
 	$(eval registry=public.ecr.aws/r3q7i5p9/ubuntu-proxy)
 	docker kill ubuntu-proxy || true
