@@ -1,0 +1,10 @@
+[Unit]
+Description=brev-servicemesh-init
+After=network.target
+
+[Service]
+User=root
+ExecStart=/home/linuxbrew/.linuxbrew/bin/brev configure --user brev
+
+[Install]
+WantedBy=default.target
