@@ -10,12 +10,6 @@ build-ubuntu-proxy:
 	$(eval registry=public.ecr.aws/r3q7i5p9/ubuntu-proxy)
 	cd ubuntu-proxy && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
 
-dev-push-ubuntu-proxy: build-ubuntu-proxy
-	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
-	$(eval registry=public.ecr.aws/r3q7i5p9/ubuntu-proxy)
-	aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${registry}
-	$(DOCKERCMD) push ${registry}:${tag}
-
 dev-run-ubuntu-proxy: build-ubuntu-proxy
 	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
 	$(eval registry=public.ecr.aws/r3q7i5p9/ubuntu-proxy)
@@ -24,6 +18,13 @@ dev-run-ubuntu-proxy: build-ubuntu-proxy
 
 dev-shell-ubuntu-proxy:
 	docker exec -it ubuntu-proxy bash
+
+dev-push-ubuntu-proxy: build-ubuntu-proxy
+	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
+	$(eval registry=public.ecr.aws/r3q7i5p9/ubuntu-proxy)
+	aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${registry}
+	$(DOCKERCMD) push ${registry}:${tag}
+	git tag ${registry}-${tag} && git push origin ${registry}-${tag}
 
 dev-push-ubuntu-proxy-ideacommunity2020.3.4:
 	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
@@ -63,12 +64,13 @@ prod-get-ubuntu-proxy:
         --projection-expression "#I" \
         --expression-attribute-names '{ "#I": "image"}'
 
-prod-push-ubuntu-proxy:
+prod-push-ubuntu-proxy: diff
 	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
 	$(eval registry=brevdev/ubuntu-proxy)
 	docker login
 	cd ubuntu-proxy && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
 	$(DOCKERCMD) push ${registry}:${tag}
+	git tag ${registry}-${tag} && git push origin ${registry}-${tag}
 	aws dynamodb update-item --table-name brev-deploy-prod  --key '{"pk": {"S": "workspace_template:4nbb4lg2s"}, "sk": {"S": "workspace_template"}}' --attribute-updates '{"image": {"Value": {"S": "registry.hub.docker.com/brevdev/ubuntu-proxy:${tag}"},"Action": "PUT"}}' --return-values UPDATED_NEW --region us-east-1
 
 prod-admin-get-ubuntu-proxy:
@@ -78,12 +80,13 @@ prod-admin-get-ubuntu-proxy:
         --projection-expression "#I" \
         --expression-attribute-names '{ "#I": "image"}'
 
-prod-admin-push-ubuntu-proxy:
+prod-admin-push-ubuntu-proxy: diff
 	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
 	$(eval registry=brevdev/ubuntu-proxy)
 	docker login
 	cd ubuntu-proxy && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
 	$(DOCKERCMD) push ${registry}:${tag}
+	git tag ${registry}-${tag} && git push origin ${registry}-${tag}
 	aws dynamodb update-item --table-name brev-deploy-prod  --key '{"pk": {"S": "workspace_template:v7nd45zsc"}, "sk": {"S": "workspace_template"}}' --attribute-updates '{"image": {"Value": {"S": "registry.hub.docker.com/brevdev/ubuntu-proxy:${tag}"},"Action": "PUT"}}' --return-values UPDATED_NEW --region us-east-1
 	
 prod-push-ubuntu-proxy-ideacommunity2020.3.4: diff
@@ -92,6 +95,7 @@ prod-push-ubuntu-proxy-ideacommunity2020.3.4: diff
 	docker login
 	cd ubuntu-proxy-ideacommunity2020.3.4 && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
 	$(DOCKERCMD) push ${registry}:${tag}
+	git tag ${registry}-${tag} && git push origin ${registry}-${tag}
 
 prod-push-ubuntu-proxy-ideaultimate2020.3.4: diff
 	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
@@ -99,6 +103,7 @@ prod-push-ubuntu-proxy-ideaultimate2020.3.4: diff
 	docker login
 	cd ubuntu-proxy-ideaultimate2020.3.4 && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
 	$(DOCKERCMD) push ${registry}:${tag}
+	git tag ${registry}-${tag} && git push origin ${registry}-${tag}
 
 prod-push-ubuntu-proxy-webstorm2020.3.3: diff
 	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
@@ -106,6 +111,7 @@ prod-push-ubuntu-proxy-webstorm2020.3.3: diff
 	docker login
 	cd ubuntu-proxy-webstorm2020.3.3 && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
 	$(DOCKERCMD) push ${registry}:${tag}
+	git tag ${registry}-${tag} && git push origin ${registry}-${tag}
 
 prod-push-ubuntu-proxy-rstudio1.4.1717: diff
 	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
@@ -113,6 +119,7 @@ prod-push-ubuntu-proxy-rstudio1.4.1717: diff
 	docker login
 	cd ubuntu-proxy-rstudio1.4.1717 && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
 	$(DOCKERCMD) push ${registry}:${tag}
+	git tag ${registry}-${tag} && git push origin ${registry}-${tag}
 
 prod-push-ubuntu-proxy-clion2020.3.4: diff
 	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
@@ -120,6 +127,7 @@ prod-push-ubuntu-proxy-clion2020.3.4: diff
 	docker login
 	cd ubuntu-proxy-clion2020.3.4 && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
 	$(DOCKERCMD) push ${registry}:${tag}
+	git tag ${registry}-${tag} && git push origin ${registry}-${tag}
 
 prod-push-ubuntu-proxy-datagrip2020.3.2: diff
 	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
@@ -127,6 +135,7 @@ prod-push-ubuntu-proxy-datagrip2020.3.2: diff
 	docker login
 	cd ubuntu-proxy-datagrip2020.3.2 && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
 	$(DOCKERCMD) push ${registry}:${tag}
+	git tag ${registry}-${tag} && git push origin ${registry}-${tag}
 
 prod-push-ubuntu-proxy-goland2020.3.5: diff
 	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
@@ -134,6 +143,7 @@ prod-push-ubuntu-proxy-goland2020.3.5: diff
 	docker login
 	cd ubuntu-proxy-goland2020.3.5 && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
 	$(DOCKERCMD) push ${registry}:${tag}
+	git tag ${registry}-${tag} && git push origin ${registry}-${tag}
 
 prod-push-ubuntu-proxy-mps2020.3: diff
 	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
@@ -141,6 +151,7 @@ prod-push-ubuntu-proxy-mps2020.3: diff
 	docker login
 	cd ubuntu-proxy-mps2020.3 && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
 	$(DOCKERCMD) push ${registry}:${tag}
+	git tag ${registry}-${tag} && git push origin ${registry}-${tag}
 
 prod-push-ubuntu-proxy-phpstorm2020.3.3: diff
 	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
@@ -148,6 +159,7 @@ prod-push-ubuntu-proxy-phpstorm2020.3.3: diff
 	docker login
 	cd ubuntu-proxy-phpstorm2020.3.3 && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
 	$(DOCKERCMD) push ${registry}:${tag}
+	git tag ${registry}-${tag} && git push origin ${registry}-${tag}
 
 prod-push-ubuntu-proxy-pycharmcommunity2020.3.5: diff
 	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
@@ -155,6 +167,7 @@ prod-push-ubuntu-proxy-pycharmcommunity2020.3.5: diff
 	docker login
 	cd ubuntu-proxy-pycharmcommunity2020.3.5 && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
 	$(DOCKERCMD) push ${registry}:${tag}
+	git tag ${registry}-${tag} && git push origin ${registry}-${tag}
 
 prod-push-ubuntu-proxy-pycharmprofessional2020.3.5: diff
 	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
@@ -162,6 +175,7 @@ prod-push-ubuntu-proxy-pycharmprofessional2020.3.5: diff
 	docker login
 	cd ubuntu-proxy-pycharmprofessional2020.3.5 && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
 	$(DOCKERCMD) push ${registry}:${tag}
+	git tag ${registry}-${tag} && git push origin ${registry}-${tag}
 
 prod-push-ubuntu-proxy-rider2020.3.4: diff
 	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
@@ -169,6 +183,7 @@ prod-push-ubuntu-proxy-rider2020.3.4: diff
 	docker login
 	cd ubuntu-proxy-rider2020.3.4 && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
 	$(DOCKERCMD) push ${registry}:${tag}
+	git tag ${registry}-${tag} && git push origin ${registry}-${tag}
 
 prod-push-ubuntu-proxy-rubymine2020.3.2: diff
 	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
@@ -176,6 +191,7 @@ prod-push-ubuntu-proxy-rubymine2020.3.2: diff
 	docker login
 	cd ubuntu-proxy-rubymine2020.3.2 && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
 	$(DOCKERCMD) push ${registry}:${tag}
+	git tag ${registry}-${tag} && git push origin ${registry}-${tag}
 
 prod-push-all-jetbrains-ides:
 	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
