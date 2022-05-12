@@ -60,7 +60,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y      \
   stable" &&                                                     \
   \
   apt-get update && apt-get install --no-install-recommends -y      \
-  docker-ce docker-ce-cli containerd.io &&                       \
+  docker-ce=5:20.10.13~3-0~ubuntu-focal docker-ce-cli=5:20.10.13~3-0~ubuntu-focal containerd.io=1.5.11-1 &&                       \
   \
   # Housekeeping
   apt-get clean -y &&                                               \
