@@ -57,6 +57,15 @@ dev-push-ubuntu-proxy-rstudio1.4.1717:
 ###### PROD ######
 ##################
 
+update-workspace-template:
+	[ "${template_id}" ] || ( echo "'template_id' not provided"; exit 1 )
+	[ "${image}" ] || ( echo "'template_id' not provided"; exit 1 )
+	aws dynamodb update-item --table-name brev-deploy-prod  --key '{"pk": {"S": "workspace_template:${template_id}"}, "sk": {"S": "workspace_template"}}' --attribute-updates '{"image": {"Value": {"S": "${image}"},"Action": "PUT"}}' --return-values UPDATED_NEW --region us-east-1
+
+prod-update-workspace-template:
+	[ "${tag}" ] || ( echo "'template_id' not provided"; exit 1 )
+	make update-workspace-template template_id=4nbb4lg2s image=registry.hub.docker.com/brevdev/ubuntu-proxy:${tag}
+
 prod-get-ubuntu-proxy:
 	aws dynamodb get-item --table-name brev-deploy-prod  \
     	--key '{"pk": {"S": "workspace_template:4nbb4lg2s"}, "sk": {"S": "workspace_template"}}' \
@@ -71,7 +80,7 @@ prod-push-ubuntu-proxy: diff
 	cd ubuntu-proxy && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
 	$(DOCKERCMD) push ${registry}:${tag}
 	git tag ${registry}-${tag} && git push origin ${registry}-${tag}
-	aws dynamodb update-item --table-name brev-deploy-prod  --key '{"pk": {"S": "workspace_template:4nbb4lg2s"}, "sk": {"S": "workspace_template"}}' --attribute-updates '{"image": {"Value": {"S": "registry.hub.docker.com/brevdev/ubuntu-proxy:${tag}"},"Action": "PUT"}}' --return-values UPDATED_NEW --region us-east-1
+	make prod-update-workspace-template tag=${tag}
 
 prod-admin-get-ubuntu-proxy:
 	aws dynamodb get-item --table-name brev-deploy-prod  \
@@ -80,6 +89,10 @@ prod-admin-get-ubuntu-proxy:
         --projection-expression "#I" \
         --expression-attribute-names '{ "#I": "image"}'
 
+prod-admin-update-workspace-template:
+	[ "${tag}" ] || ( echo "'template_id' not provided"; exit 1 )
+	make update-workspace-template template_id=v7nd45zsc image=registry.hub.docker.com/brevdev/ubuntu-proxy:${tag}
+
 prod-admin-push-ubuntu-proxy: diff
 	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
 	$(eval registry=brevdev/ubuntu-proxy)
@@ -87,7 +100,8 @@ prod-admin-push-ubuntu-proxy: diff
 	cd ubuntu-proxy && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
 	$(DOCKERCMD) push ${registry}:${tag}
 	git tag ${registry}-${tag} && git push origin ${registry}-${tag}
-	aws dynamodb update-item --table-name brev-deploy-prod  --key '{"pk": {"S": "workspace_template:v7nd45zsc"}, "sk": {"S": "workspace_template"}}' --attribute-updates '{"image": {"Value": {"S": "registry.hub.docker.com/brevdev/ubuntu-proxy:${tag}"},"Action": "PUT"}}' --return-values UPDATED_NEW --region us-east-1
+	make prod-admin-update-workspace-template tag=${tag}
+
 	
 prod-push-ubuntu-proxy-ideacommunity2020.3.4: diff
 	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
