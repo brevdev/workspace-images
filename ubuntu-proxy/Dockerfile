@@ -41,6 +41,8 @@ RUN apt-get update &&                            \
 # Make use of stopsignal (instead of sigterm) to stop systemd containers.
 STOPSIGNAL SIGRTMIN+3
 
+RUN yes | unminimize
+
 # Docker install
 RUN apt-get update && apt-get install --no-install-recommends -y      \
   apt-transport-https                                            \
@@ -133,7 +135,6 @@ RUN apt-get install -y \
   ca-certificates \
   lsof
 
-RUN yes | unminimize
 # Docker Compose
 RUN curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 RUN chmod +x /usr/local/bin/docker-compose
