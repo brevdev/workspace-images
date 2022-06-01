@@ -1,0 +1,13 @@
+[Unit]
+Description=brevmon
+After=network.target
+
+[Service]
+User=root
+Type=exec
+ExecStart=/usr/bin/brevmon
+ExecReload=/usr/bin/brevmon
+Restart=always
+
+[Install]
+WantedBy=default.target

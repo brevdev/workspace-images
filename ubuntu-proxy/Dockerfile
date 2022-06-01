@@ -199,10 +199,6 @@ RUN huproxy --help
 COPY huproxy.service /lib/systemd/system/
 RUN ln -sf /lib/systemd/system/huproxy.service /etc/systemd/system/default.target.wants/huproxy.service
 
-# brev sshmon
-COPY brev-sshmon.service /lib/systemd/system/
-RUN ln -sf /lib/systemd/system/brev-sshmon.service /etc/systemd/system/default.target.wants/brev-sshmon.service
-
 # brev vpn configure
 COPY brev-servicemesh-init.service /lib/systemd/system/
 RUN ln -sf /lib/systemd/system/brev-servicemesh-init.service /etc/systemd/system/default.target.wants/brev-servicemesh-init.service
@@ -210,6 +206,11 @@ RUN ln -sf /lib/systemd/system/brev-servicemesh-init.service /etc/systemd/system
 # brev setup
 COPY brev-setup.service /lib/systemd/system/
 RUN ln -sf /lib/systemd/system/brev-setup.service /etc/systemd/system/default.target.wants/brev-setup.service
+
+# brevmon
+COPY brevmon /usr/bin
+COPY brevmon.service /lib/systemd/system/
+RUN ln -sf /lib/systemd/system/brevmon.service /etc/systemd/system/default.target.wants/brevmon.service
 
 USER brev
 
