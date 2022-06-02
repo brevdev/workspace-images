@@ -79,8 +79,8 @@ prod-push-ubuntu-proxy: diff
 	docker login
 	cd ubuntu-proxy && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
 	$(DOCKERCMD) push ${registry}:${tag}
-	git tag ${registry}-${tag} && git push origin ${registry}-${tag}
 	make prod-update-workspace-template tag=${tag}
+	git tag ${registry}-${tag} && git push origin ${registry}-${tag}
 
 prod-admin-get-ubuntu-proxy:
 	aws dynamodb get-item --table-name brev-deploy-prod  \
@@ -99,8 +99,8 @@ prod-admin-push-ubuntu-proxy: diff
 	docker login
 	cd ubuntu-proxy && $(DOCKERCMD) build -t ${registry}:${tag} . && cd -
 	$(DOCKERCMD) push ${registry}:${tag}
-	git tag ${registry}-${tag} && git push origin ${registry}-${tag}
 	make prod-admin-update-workspace-template tag=${tag}
+	git tag ${registry}-${tag} && git push origin ${registry}-${tag}
 
 	
 prod-push-ubuntu-proxy-ideacommunity2020.3.4: diff
