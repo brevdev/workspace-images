@@ -230,7 +230,8 @@ RUN sudo chmod +x /home/brev/download-vscode-server.sh
 RUN /home/brev/download-vscode-server.sh && \
  rm /home/brev/download-vscode-server.sh
 
-RUN echo 'export PATH=`echo ~/.vscode-server/bin/*/bin`:$PATH'; echo 'export VSCODE_IPC_HOOK_CLI=`echo /var/run/user/1000/vscode-ipc-*.sock`'
+RUN echo 'export PATH=`echo ~/.vscode-server/bin/*/bin`:$PATH'; echo 'export VSCODE_IPC_HOOK_CLI=`echo /var/run/user/1000/vscode-ipc-*.sock`' >> /home/brev/.bashrc 
+RUN echo 'export PATH=`echo ~/.vscode-server/bin/*/bin`:$PATH'; echo 'export VSCODE_IPC_HOOK_CLI=`echo /var/run/user/1000/vscode-ipc-*.sock`' >> /home/brev/.zshrc 
 
 USER root
 
