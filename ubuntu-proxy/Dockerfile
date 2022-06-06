@@ -219,11 +219,6 @@ RUN NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.co
 RUN echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/brev/.bashrc 
 RUN echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/brev/.zshrc
 
-# brev cli
-RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install brevdev/homebrew-brev/brev && echo brev --version
-# COPY brev /usr/local/bin
-# RUN chmod +x  /usr/local/bin/brev
-
 # vscode-server
 COPY download-vscode-server.sh /home/brev
 RUN sudo chmod +x /home/brev/download-vscode-server.sh 
@@ -232,6 +227,11 @@ RUN /home/brev/download-vscode-server.sh && \
 
 RUN echo 'export PATH=`echo ~/.vscode-server/bin/*/bin`:$PATH'; echo 'export VSCODE_IPC_HOOK_CLI=`echo /var/run/user/1000/vscode-ipc-*.sock`' >> /home/brev/.bashrc 
 RUN echo 'export PATH=`echo ~/.vscode-server/bin/*/bin`:$PATH'; echo 'export VSCODE_IPC_HOOK_CLI=`echo /var/run/user/1000/vscode-ipc-*.sock`' >> /home/brev/.zshrc 
+
+# brev cli
+RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install brevdev/homebrew-brev/brev && echo brev --version && echo "68"
+# COPY brev /usr/local/bin
+# RUN chmod +x  /usr/local/bin/brev
 
 USER root
 
