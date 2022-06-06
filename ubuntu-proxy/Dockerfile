@@ -229,7 +229,7 @@ RUN echo 'export PATH=`echo ~/.vscode-server/bin/*/bin`:$PATH'; echo 'export VSC
 RUN echo 'export PATH=`echo ~/.vscode-server/bin/*/bin`:$PATH'; echo 'export VSCODE_IPC_HOOK_CLI=`echo /var/run/user/1000/vscode-ipc-*.sock`' >> /home/brev/.zshrc 
 
 # brev cli
-RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install brevdev/homebrew-brev/brev && echo brev --version && echo "68"
+RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install brevdev/homebrew-brev/brev && echo brev --version && echo "67"
 # COPY brev /usr/local/bin
 # RUN chmod +x  /usr/local/bin/brev
 
