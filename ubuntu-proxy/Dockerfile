@@ -224,13 +224,10 @@ RUN echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/brev/
 COPY download-vscode-server.sh /home/brev
 RUN sudo chmod +x /home/brev/download-vscode-server.sh 
 RUN /home/brev/download-vscode-server.sh && \
- rm /home/brev/download-vscode-server.sh
-
-RUN echo 'export PATH=`echo ~/.vscode-server/bin/*/bin`:$PATH'; echo 'export VSCODE_IPC_HOOK_CLI=`echo /var/run/user/1000/vscode-ipc-*.sock`' >> /home/brev/.bashrc 
-RUN echo 'export PATH=`echo ~/.vscode-server/bin/*/bin`:$PATH'; echo 'export VSCODE_IPC_HOOK_CLI=`echo /var/run/user/1000/vscode-ipc-*.sock`' >> /home/brev/.zshrc 
+  rm /home/brev/download-vscode-server.sh
 
 # brev cli
-RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install brevdev/homebrew-brev/brev && echo brev --version && echo "67"
+RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install brevdev/homebrew-brev/brev && brev --version && echo 0
 # COPY brev /usr/local/bin
 # RUN chmod +x  /usr/local/bin/brev
 
