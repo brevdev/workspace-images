@@ -190,6 +190,7 @@ COPY speedtest-output.sh ./speedtest-output.sh
 RUN cat ./speedtest-output.sh > /etc/update-motd.d/00-header
 RUN sudo rm /etc/update-motd.d/10-help-text
 RUN sudo rm /etc/update-motd.d/50-motd-news
+RUN sudo rm ./speedtest-output.sh
 
 COPY speed_test.py /usr/bin/speedtest
 
