@@ -227,7 +227,7 @@ RUN /home/brev/download-vscode-server.sh && \
   rm /home/brev/download-vscode-server.sh
 
 # brev cli
-RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install brevdev/homebrew-brev/brev && brev --version && echo 0
+RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install brevdev/homebrew-brev/brev && brev --version && echo 1
 # COPY brev /usr/local/bin
 # RUN chmod +x  /usr/local/bin/brev
 
