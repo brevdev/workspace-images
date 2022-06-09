@@ -208,11 +208,6 @@ RUN ln -sf /lib/systemd/system/brev-servicemesh-init.service /etc/systemd/system
 COPY brev-setup.service /lib/systemd/system/
 RUN ln -sf /lib/systemd/system/brev-setup.service /etc/systemd/system/default.target.wants/brev-setup.service
 
-# brevmon
-COPY brevmon /usr/bin
-COPY brevmon.service /lib/systemd/system/
-RUN ln -sf /lib/systemd/system/brevmon.service /etc/systemd/system/default.target.wants/brevmon.service
-
 USER brev
 
 # brew
@@ -232,6 +227,11 @@ RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install brevd
 # RUN chmod +x  /usr/local/bin/brev
 
 USER root
+
+# brevmon
+COPY brevmon /usr/bin
+COPY brevmon.service /lib/systemd/system/
+RUN ln -sf /lib/systemd/system/brevmon.service /etc/systemd/system/default.target.wants/brevmon.service
 
 RUN echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /root/.bashrc && echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /root/.zshrc
 
