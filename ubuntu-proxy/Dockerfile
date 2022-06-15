@@ -212,7 +212,7 @@ USER brev
 
 # brew
 RUN NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-RUN echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/brev/.bashrc 
+RUN echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/brev/.bashrc
 RUN echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/brev/.zshrc
 
 # vscode-server
@@ -234,4 +234,6 @@ COPY brevmon.service /lib/systemd/system/
 RUN ln -sf /lib/systemd/system/brevmon.service /etc/systemd/system/default.target.wants/brevmon.service
 
 RUN echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /root/.bashrc && echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /root/.zshrc
+COPY brev-env-vars.bash .
+RUN cat brev-env-vars.bash >> /etc/bash.bashrc && rm brev-env-vars.bash
 
