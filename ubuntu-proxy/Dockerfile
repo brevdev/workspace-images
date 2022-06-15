@@ -217,7 +217,7 @@ RUN echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/brev/
 
 # vscode-server
 COPY download-vscode-server.sh /home/brev
-RUN sudo chmod +x /home/brev/download-vscode-server.sh 
+RUN sudo chmod +x /home/brev/download-vscode-server.sh
 RUN /home/brev/download-vscode-server.sh && \
   rm /home/brev/download-vscode-server.sh
 
@@ -237,3 +237,5 @@ RUN echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /root/.bash
 COPY brev-env-vars.bash .
 RUN cat brev-env-vars.bash >> /etc/bash.bashrc && rm brev-env-vars.bash
 
+COPY brev-env-vars.zsh .
+RUN cat brev-env-vars.zsh >> /etc/zsh/zshrc && rm brev-env-vars.zsh
