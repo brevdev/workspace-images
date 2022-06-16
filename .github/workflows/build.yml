@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build ubuntu-proxy --file Dockerfile --tag ubuntu-proxy:$(date +%s)
+      run: docker build ubuntu-proxy --file ubuntu-proxy/Dockerfile --tag ubuntu-proxy:$(date +%s)
