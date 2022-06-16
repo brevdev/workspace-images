@@ -1,5 +1,5 @@
 jobs:
-  push_to_registry:
+  get_current:
     name: Gets latest image version 
     runs-on: ubuntu-latest
       - uses: actions/setup-python@v2
