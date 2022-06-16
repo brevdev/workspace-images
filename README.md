@@ -42,7 +42,8 @@ Output:
 Create new release
 
 ```
-$ make prod-push-ubuntu-proxy tag=0.1.17
+$ git tag 0.1.17
+$ git push origin 0.1.17
 ```
 
 ### admins only
