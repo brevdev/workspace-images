@@ -1,3 +1,6 @@
+on:
+  workflow_dispatch:
+  
 jobs:
   get_current:
     name: Gets latest image version 
