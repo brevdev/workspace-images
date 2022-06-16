@@ -2,6 +2,7 @@ jobs:
   get_current:
     name: Gets latest image version 
     runs-on: ubuntu-latest
+    steps:
       - uses: actions/setup-python@v2
         with:
           python-version: '3.7'
