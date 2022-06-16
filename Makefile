@@ -40,11 +40,7 @@ prod-update-workspace-template:
 	make update-workspace-template template_id=4nbb4lg2s image=registry.hub.docker.com/brevdev/ubuntu-proxy:${tag}
 
 prod-get-ubuntu-proxy:
-	aws dynamodb get-item --table-name brev-deploy-prod  \
-    	--key '{"pk": {"S": "workspace_template:4nbb4lg2s"}, "sk": {"S": "workspace_template"}}' \
-        --region us-east-1 \
-        --projection-expression "#I" \
-        --expression-attribute-names '{ "#I": "image"}'
+	aws dynamodb get-item --table-name brev-deploy-prod --key '{"pk": {"S": "workspace_template:4nbb4lg2s"}, "sk": {"S": "workspace_template"}}' --region us-east-1 --projection-expression "#I" --expression-attribute-names '{ "#I": "image"}'
 
 prod-push-ubuntu-proxy: diff
 	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )

@@ -1,6 +1,6 @@
 on:
   workflow_dispatch:
-  
+
 jobs:
   get_current:
     name: Gets latest image version 
@@ -14,7 +14,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install awscli
       - run: 	|
-          aws dynamodb update-item --table-name brev-deploy-prod  --key '{"pk": {"S": "workspace_template:4nbb4lg2s"}, "sk": {"S": "workspace_template"}}' --attribute-updates '{"image": {"Value": {"S": "registry.hub.docker.com/brevdev/ubuntu-proxy:$RELEASE_VERSION"},"Action": "PUT"}}' --return-values UPDATED_NEW --region us-east-1
+          aws dynamodb get-item --table-name brev-deploy-prod --key '{"pk": {"S": "workspace_template:4nbb4lg2s"}, "sk": {"S": "workspace_template"}}'  --region us-east-1 --projection-expression "#I" --expression-attribute-names '{ "#I": "image"}'
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
