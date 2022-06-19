@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build ubuntu-proxy --file ubuntu-proxy/Dockerfile --tag ubuntu-proxy:$(date +%s)
+      run: make build-ci
     - name: Report Status
       if: always()
       uses: ravsamhq/notify-slack-action@v1

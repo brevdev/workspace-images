@@ -1,6 +1,20 @@
 .PHONY: dev-push-ubuntu-proxy dev-run-ubuntu-proxy
 DOCKERCMD=docker
 
+##################
+###### CI ########
+##################
+
+build-ci:
+	docker build ubuntu-proxy --file ubuntu-proxy/Dockerfile --tag ubuntu-proxy:test
+
+get-current-ci:
+	aws dynamodb get-item --table-name brev-deploy-prod --key '{"pk": {"S": "workspace_template:4nbb4lg2s"}, "sk": {"S": "workspace_template"}}'  --region us-east-1 --projection-expression "#I" --expression-attribute-names '{ "#I": "image"}'
+
+update-template-ci:
+	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
+	aws dynamodb update-item --table-name brev-deploy-prod  --key '{"pk": {"S": "workspace_template:4nbb4lg2s"}, "sk": {"S": "workspace_template"}}' --attribute-updates '{"image": {"Value": {"S": "registry.hub.docker.com/brevdev/ubuntu-proxy:${tag}"},"Action": "PUT"}}' --return-values UPDATED_NEW --region us-east-1
+
 #################
 ###### DEV ######
 #################
