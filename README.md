@@ -3,7 +3,7 @@ Images to be used for brev workspaces
 
 # Development
 
-## useful commands
+## Useful commands
 
 ```
 $ make dev-push-ubuntu-proxy tag=$(git rev-parse --short=6 HEAD)
@@ -17,9 +17,13 @@ $ make dev-run-ubuntu-proxy tag=$(git rev-parse --short=6 HEAD)
 $ make dev-shell-ubuntu-proxy
 ```
 
-## release commands
+## Release commands
 
-### get the current release version for `ubuntu-proxy`
+To release, we create a new tag. When we rebuild the image, we download the latest version of the CLI.
+
+### 1) Get the current release version for `ubuntu-proxy`
+
+This tell us which tag to use. Just bump the version up -- so here it would be `0.1.17` for the next version.
 
 ```
 $ make prod-get-ubuntu-proxy
@@ -39,14 +43,16 @@ Output:
 
 ```
 
-Create new release
+### 2) Create new release
+
+Use the lastest tag. Here it would be `0.1.17`.
 
 ```
 $ git tag 0.1.17
 $ git push origin 0.1.17
 ```
 
-### admins only
+### Releasing to Admins Only
 
 get the current release version for `ubuntu-proxy`
 
