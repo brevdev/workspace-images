@@ -239,3 +239,6 @@ RUN cat brev-env-vars.bash >> /etc/bash.bashrc && rm brev-env-vars.bash
 
 COPY brev-env-vars.zsh .
 RUN cat brev-env-vars.zsh >> /etc/zsh/zshrc && rm brev-env-vars.zsh
+
+COPY simpler-default-ps1.bash .
+RUN cat simpler-default-ps1.bash >> /home/brev/.bashrc && rm simpler-default-ps1.bash
