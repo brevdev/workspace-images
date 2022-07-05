@@ -54,6 +54,8 @@ $ git push origin 0.1.17
 
 ### Releasing to Admins Only
 
+Right now we auto update admin template when we release to prod. When making a custom admin release ensure you disable this behavior 
+
 get the current release version for `ubuntu-proxy`
 
 ```

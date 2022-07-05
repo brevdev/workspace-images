@@ -14,7 +14,7 @@ get-current-ci:
 update-template-ci:
 	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
 	make update-template tag=${tag} template_id=4nbb4lg2s # prod
-	make update-template tag=${tag} template_id=v7nd45zsc # admin -- remove if we no longer want in sync
+	make update-template tag=${tag} template_id=v7nd45zsc # admin -- auto deploys, remove if we no longer want in sync
 
 update-template:
 	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
