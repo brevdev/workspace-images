@@ -13,7 +13,13 @@ get-current-ci:
 
 update-template-ci:
 	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
-	aws dynamodb update-item --table-name brev-deploy-prod  --key '{"pk": {"S": "workspace_template:4nbb4lg2s"}, "sk": {"S": "workspace_template"}}' --attribute-updates '{"image": {"Value": {"S": "registry.hub.docker.com/brevdev/ubuntu-proxy:${tag}"},"Action": "PUT"}}' --return-values UPDATED_NEW --region us-east-1
+	make update-template tag=${tag} template_id=4nbb4lg2s # prod
+	make update-template tag=${tag} template_id=v7nd45zsc # admin -- remove if we no longer want in sync
+
+update-template:
+	[ "${tag}" ] || ( echo "'tag' not provided"; exit 1 )
+	[ "${template_id}" ] || ( echo "'tag' not provided"; exit 1 )
+	make update-workspace-template image=registry.hub.docker.com/brevdev/ubuntu-proxy:${tag} template_id=${template_id}
 
 #################
 ###### DEV ######
