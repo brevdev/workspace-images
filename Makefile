@@ -100,3 +100,7 @@ diff: ## git diff
 
 unzip-brevmon:
 	tar xvf ${file} brevmon
+
+packer-deploy:
+	packer validate packer/
+	packer build packer/
