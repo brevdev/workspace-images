@@ -11,6 +11,7 @@ locals {
   version      = formatdate("YYYYMMDDhhmm", timestamp())
   name         = "brev-basic-ubuntu-amd64"
   name_version = "${local.name}-${local.version}"
+  ml_name_version = "ml-ubuntu-pytorch-with-models-${local.version}"
 }
 
 source "amazon-ebs" "ubuntu-west-2" {
@@ -49,6 +50,15 @@ source "amazon-ebs" "ubuntu-west-1" {
   ami_groups = ["all"]
 }
 
+source "amazon-ebs" "ml-ubuntu-west-2" {
+  ami_name      = local.ml_name_version
+  instance_type = "t2.micro"
+  region        = "us-west-2"
+  source_ami = "ami-0fe5363b80d5bb2da"
+  ssh_username = "ubuntu"
+
+  ami_groups = ["all"]
+}
 
 build {
   name = local.name_version
@@ -59,5 +69,16 @@ build {
 
   provisioner "shell" {
     script = "scripts/install-docker.sh"
+  }
+}
+
+build {
+  name = local.ml_name_version
+  sources = [
+    "source.amazon-ebs.ml-ubuntu-west-2",
+  ]
+  
+  provisioner "shell" {
+    script = "scripts/download-ml-models.sh"
   }
 }
