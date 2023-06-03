@@ -34,6 +34,20 @@ source "amazon-ebs" "ubuntu-west-1" {
   ssh_username = "ubuntu"
 
   ami_groups = ["all"]
+
+  ami_block_device_mappings {
+    device_name = "/dev/xvda"
+    volume_size = 100
+    volume_type = "gp3"
+    delete_on_termination = true
+  }
+
+  launch_block_device_mappings {
+    device_name = "/dev/xvda"
+    volume_size = 100
+    volume_type = "gp3"
+    delete_on_termination = true
+  }
 }
 
 // gcp id ubuntu 20.04: 8590691149326093337

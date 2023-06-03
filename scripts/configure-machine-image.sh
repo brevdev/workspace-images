@@ -2,6 +2,18 @@
 
 set -euvxo pipefail
 
+lsblk
+mount
+fdisk -l
+
+growpart /dev/xvda 1
+resize2fs /dev/xvda1
+# pvresize /dev/xvda1
+# lvresize -l +100%FREE /dev/mapper/ubuntu--vg-ubuntu--lv
+# resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv
+
+fdisk -l
+
 # CONFIGURE BASE ===========================================
 export DISTRO=$(lsb_release -si | tr '[:upper:]' '[:lower:]')
 export DEBIAN_FRONTEND=noninteractive
@@ -46,6 +58,19 @@ apt-get update && \
 		vim \
 		wget && \
 	apt-get autoremove -y
+
+pip install --upgrade \
+	accelerate \
+	bitsandbytes \
+	black \
+	datasets \
+	huggingface_hub \
+	isort \
+	pylama \
+	tensorboard \
+	torch \
+	transformers
+
 # ==========================================================
 
 # INSTALL DOCKER ===========================================
@@ -162,10 +187,9 @@ apt-get update && apt-get install -y --no-install-recommends \
 # Keep apt from auto upgrading the cublas and nccl packages. See https://gitlab.com/nvidia/container-images/cuda/-/issues/88
 apt-mark hold ${NV_LIBCUBLAS_PACKAGE_NAME} ${NV_LIBNCCL_PACKAGE_NAME}
 
-# Add entrypoint items
 export NVIDIA_PRODUCT_NAME="CUDA"
-# COPY entrypoint.d/ /opt/nvidia/entrypoint.d/
-# COPY nvidia_entrypoint.sh /opt/nvidia/
-# ENTRYPOINT ["/opt/nvidia/nvidia_entrypoint.sh"]
+# ==========================================================
+
+# TEST ENV =================================================
 
 # ==========================================================
