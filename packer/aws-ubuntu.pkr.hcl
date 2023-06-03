@@ -23,7 +23,8 @@ source "amazon-ebs" "ubuntu-west-1" {
   region        = "us-west-1"
   source_ami_filter {
     filters = {
-      name                = "ubuntu/images/*ubuntu-focal-20.04-amd64-server-*"
+      name                = "ubuntu/images/*ubuntu-focal-20.04-amd64-server-20230517"
+      # name                = "ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-20230516"
       root-device-type    = "ebs"
       virtualization-type = "hvm"
     }
@@ -44,7 +45,7 @@ source "googlecompute" "ubuntu" {
   zone                 = "us-central1-a"
   instance_name        = "n1-standard-1"
   ssh_username         = "ubuntu"
-  ssh_timeout          = "15m"
+  ssh_timeout          = "5m"
   wait_to_add_ssh_keys = "1m"
 
   // disk_image_name = local.name_version
@@ -54,10 +55,11 @@ build {
   name = local.name_version
   sources = [
     "source.amazon-ebs.ubuntu-west-1",
-    "source.googlecompute.ubuntu"
+    # "source.googlecompute.ubuntu"
   ]
 
   provisioner "shell" {
-    script = "scripts/install-docker.sh"
+    script          = "scripts/configure-machine-image.sh"
+    execute_command = "/usr/bin/cloud-init status --wait && chmod +x {{ .Path }}; sudo -E -S sh -c '{{ .Vars }} {{ .Path }}'"
   }
 }
