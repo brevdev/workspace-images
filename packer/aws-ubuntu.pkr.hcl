@@ -4,7 +4,7 @@ packer {
       version = ">= 0.0.2"
       source  = "github.com/hashicorp/amazon"
     }
-  googlecompute = {
+    googlecompute = {
       version = ">= 0.0.2"
       source  = "github.com/hashicorp/googlecompute"
     }
@@ -17,14 +17,15 @@ locals {
   name_version = "${local.name}-${local.version}"
 }
 
-source "amazon-ebs" "ubuntu-west-1" {
+source "amazon-ebssurrogate" "ubuntu-west-1" {
   ami_name      = local.name_version
-  instance_type = "t2.micro"
+  # instance_type = "t2.micro"
+  instance_type = "c5d.2xlarge"
   region        = "us-west-1"
+  ami_virtualization_type = "hvm"
   source_ami_filter {
     filters = {
       name                = "ubuntu/images/*ubuntu-focal-20.04-amd64-server-20230517"
-      # name                = "ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-20230516"
       root-device-type    = "ebs"
       virtualization-type = "hvm"
     }
@@ -35,18 +36,19 @@ source "amazon-ebs" "ubuntu-west-1" {
 
   ami_groups = ["all"]
 
-  ami_block_device_mappings {
-    device_name = "/dev/xvda"
+  launch_block_device_mappings {
+    device_name = "/dev/xvdb"
     volume_size = 100
     volume_type = "gp3"
     delete_on_termination = true
   }
 
-  launch_block_device_mappings {
+  ami_root_device {
+    source_device_name = "/dev/xvdb"
     device_name = "/dev/xvda"
+    delete_on_termination = true
     volume_size = 100
     volume_type = "gp3"
-    delete_on_termination = true
   }
 }
 
@@ -68,7 +70,7 @@ source "googlecompute" "ubuntu" {
 build {
   name = local.name_version
   sources = [
-    "source.amazon-ebs.ubuntu-west-1",
+    "source.amazon-ebssurrogate.ubuntu-west-1",
     # "source.googlecompute.ubuntu"
   ]
 
