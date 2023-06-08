@@ -18,11 +18,12 @@ locals {
 }
 
 source "amazon-ebssurrogate" "ubuntu-west-1" {
-  ami_name      = local.name_version
-  # instance_type = "t2.micro"
-  instance_type = "c5d.2xlarge"
-  region        = "us-west-1"
+  ami_name                = local.name_version
+  # instance_type         = "t2.micro"
+  instance_type           = "c5d.2xlarge"
+  region                  = "us-west-1"
   ami_virtualization_type = "hvm"
+  ena_support             = true
   source_ami_filter {
     filters = {
       name                = "ubuntu/images/*ubuntu-focal-20.04-amd64-server-20230517"
@@ -54,6 +55,7 @@ source "amazon-ebssurrogate" "ubuntu-west-1" {
 
 // gcp id ubuntu 20.04: 8590691149326093337
 source "googlecompute" "ubuntu" {
+  service_account_email = "packer@brevdevprod.iam.gserviceaccount.com"
   image_name                 = local.name_version
   project_id           = "brevdevprod"
   source_image_project_id = ["ubuntu-os-cloud"]
@@ -61,8 +63,9 @@ source "googlecompute" "ubuntu" {
   zone                 = "us-central1-a"
   instance_name        = "n1-standard-1"
   ssh_username         = "ubuntu"
-  ssh_timeout          = "5m"
-  wait_to_add_ssh_keys = "1m"
+  ssh_timeout          = "1m"
+  wait_to_add_ssh_keys = "10s"
+  tags = ["packer-ssh-ingress"]
 
   // disk_image_name = local.name_version
 }
